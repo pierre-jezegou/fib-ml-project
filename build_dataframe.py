@@ -40,7 +40,7 @@ def merge_data_with_key(filenames: list[str]) -> None:
                 data_pd["UIC"] = data_pd["UIC"].apply(transform_uid)
                 result = pd.merge(result, data_pd, on="UIC", how="left")
 
-    result.to_csv('data/sncf_dataset.csv', sep=";")
+    result.to_csv('sncf_dataset.csv', sep=";")
 
 
 merge_data_with_key(FILENAMES)
