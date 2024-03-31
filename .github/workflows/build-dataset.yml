@@ -46,10 +46,14 @@ jobs:
           git add sncf_dataset.csv
           git commit -m "[AUTO] Autobuild dataset with Github Action"
       
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-          tags: false
-          force: true
+          tag_name: ${{ github.ref }}
+          release_name: Dataset
+          body: Dataset built by Github Action
+          draft: false
+          prerelease: false
