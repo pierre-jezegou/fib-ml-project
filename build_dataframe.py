@@ -27,7 +27,7 @@ wifi.to_csv('data/gares-equipees-du-wifi.csv', index=False, sep=";")
 
 
 
-def merge_data_with_key(filenames: list[str]) -> None:
+def merge_data_train_stations(filenames: list[str]) -> pd.DataFrame:
     '''Merge datasets'''
     result = pd.DataFrame()
     for filename in filenames:
@@ -40,7 +40,20 @@ def merge_data_with_key(filenames: list[str]) -> None:
                 data_pd["UIC"] = data_pd["UIC"].apply(transform_uid)
                 result = pd.merge(result, data_pd, on="UIC", how="left")
 
-    result.to_csv('sncf_dataset.csv', sep=";")
+    return result
 
 
-merge_data_with_key(FILENAMES)
+# Final merge
+train_stations = merge_data_train_stations(FILENAMES)
+prices = pd.read_csv('data/tarifs-tgv-inoui-ouigo.csv', delimiter=";", header=0)
+
+departure_stations = train_stations.add_prefix("departure_")
+arrival_stations = train_stations.add_prefix("arrival_")
+
+
+prices["Gare origine - code UIC"] = prices["Gare origine - code UIC"].apply(transform_uid)
+prices["Gare destination - code UIC"] = prices["Gare destination - code UIC"].apply(transform_uid)
+
+prices_consilidated = prices.merge(departure_stations, how="left", left_on="Gare origine - code UIC", right_on="departure_UIC").merge(arrival_stations, how="left", left_on="Gare destination - code UIC", right_on="arrival_UIC")
+
+prices_consilidated.to_csv("sncf_dataset.csv", sep=";")
