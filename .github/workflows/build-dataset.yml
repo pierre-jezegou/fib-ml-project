@@ -13,20 +13,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      #Checks-out the repository
+      # Checks-out the repository
       - name: Checkout
         uses: actions/checkout@v3
       
-        # Setup python
+      # Setup python
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.12'
+      
+      # Enable cache
+      - name: Cache Python dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
       # Run tectonic to compile document
       - name: Run builder
         run: |
-          pip install -r requirements.txt
+          pip install pandas
           python3 build_dataframe.py
       
       # Commit dataset
@@ -43,3 +52,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
           tags: false
+          force: true
