@@ -1,0 +1,51 @@
+name: 'Build dataset'
+
+on:
+  push:
+    tags:
+      - 'build-dataset-*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out the repository
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      # Setup python
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+      
+      # Enable cache
+      - name: Cache Python dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # Run tectonic to compile document
+      - name: Run builder
+        run: |
+          pip install pandas
+          python3 build_dataframe.py
+      
+      # Upload dataset to release
+      - name: Upload dataset to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: sncf_dataset.csv
+          asset_name: sncf_dataset.csv
+          tag: ${{ github.ref }}
+          overwrite: true
+          file_glob: true
+          body: "Consolidated dataset built by Github Action"
