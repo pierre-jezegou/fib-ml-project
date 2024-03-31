@@ -43,11 +43,9 @@
 \begin{document}
 \maketitle
 
-\section{Subject}
-\subsection{Introduction \& context}
-Analyzing train ticket prices is crucial for railway companies as it allows them to refine pricing strategies, optimize revenue management, and enhance operational efficiency. By leveraging extensive data and sophisticated techniques like predictive modeling, companies can gain valuable insights into pricing trends and fluctuations, enabling them to better meet customer demand and improve overall performance.
+\section{Introduction, context \& motivations}
+Analyzing train ticket prices is crucial for railway companies as it allows them to refine pricing strategies, optimize revenue management, and enhance operational efficiency. By leveraging extensive data and sophisticated techniques like predictive modeling, companies can gain valuable insights into pricing trends and fluctuations, enabling them to better meet customer demand and improve overall performance.\\
 
-\subsection{Motivations}
 We find it intriguing to conduct research on train ticket prices across various parameters. The accessibility of online datasets makes this analysis feasible, incorporating factors like train stations characteristics, services provided, distance of the trip... Leveraging techniques learned in our coursework, such as regression or classification, we can develop predictive models to discern patterns in price and forecast future trends accurately. Moreover, utilizing a real-world system, known to all, enhances the relevance of our analysis, offering practical insights into dynamic pricing strategies and revenue optimization for transportation companies.\\
 
 \textbf{How can machine learning techniques be effectively utilized to analyze train ticket prices using readily available online data, in order to optimize pricing strategies and revenue management for railway companies?}
@@ -58,21 +56,24 @@ A wealth of data is available on the "SNCF" website: the company makes available
 Construction of the dataset has already begun and is available on GitHub: \url{https://github.com/pierre-jezegou/fib-ml-project}.  This construction allows us to have enough data (especially features) to obtain an analysis as close as possible to reality.
 
 \subsection{Data shape and characteristics}
-The base dataset used before consolidation is this \href{https://ressources.data.sncf.com/explore/dataset/tarifs-tgv-inoui-ouigo/information/}{link}. It has only \textit{9 columns} before adding data from other databases to consolidate it. We cross-reference this table with \href{https://ressources.data.sncf.com/explore/dataset/gares-pianos/information/}{these data}, \href{https://ressources.data.sncf.com/explore/dataset/gares-equipees-du-wifi/information/}{this one}, and \href{https://ressources.data.sncf.com/explore/dataset/frequentation-gares/information/}{these data}. We will then add some other data (computed or formatted) during preprocessing via calculation on existing features: travel distance... The dataset covers the price range \textit{(minimum price, maximum price)} for each origin-destination and tarif class in effect on 10/02/2024.
+The base dataset used before consolidation is this \href{https://ressources.data.sncf.com/explore/dataset/tarifs-tgv-inoui-ouigo/information/}{link}. It has only \textit{9 columns} before adding data from other databases to consolidate it. We cross-reference this table with \href{https://ressources.data.sncf.com/explore/dataset/gares-pianos/information/}{these data}, \href{https://ressources.data.sncf.com/explore/dataset/gares-equipees-du-wifi/information/}{this one}, and \href{https://ressources.data.sncf.com/explore/dataset/frequentation-gares/information/}{these data}. We will then add some other data (computed or formatted) during preprocessing via calculation on existing features: travel distance... The dataset covers the price range \textit{(minimum price, maximum price)} for each origin-destination and tarif class in effect on 10/02/2024.\\
 
-We can assume the data are independent because of the data themselves. Indeed, each individual passenger is independent in their usage of the train station network. The data can be enriched as and when required by the many open data sources offered by \href{https://ressources.data.sncf.com/explore/?sort=modified}{SNCF}.
+Final dataset characteristics are \textbf{available in the \href{https://github.com/pierre-jezegou/fib-ml-project/blob/main/README.md}{README.md} file} of the project repository\\
+
+We can assume the data are independent because of the data themselves. Indeed, each individual passenger is independent in their usage of the train station network. The data can be enriched as and when required by the many open data sources offered by \href{https://ressources.data.sncf.com/}{SNCF}.
+
+Consolidated data of train stations are available in the assets of the last \href{https://github.com/pierre-jezegou/fib-ml-project/releases/}{release}. The current data contains 2861 lines corresponding to stations in the French network and 31 features for the moment corresponding to stations in the French network. They are finally composed of \textbf{11970 rows $\mathbf\times$ 70 features} before pre-processing.
 
 \subsection{Studies proposed}
 \begin{description}
-    \item[Classification:] Classification problems linked to this data
-            \begin{itemize}
-                \item Giving some parameters, tell the user when he should take the transportation.
-                \item Telling people when they should quit thir work based on the hour and locations (work and home location).
-            \end{itemize}
     \item[Regression:] Regression problems linked to this dataset
         \begin{itemize}
-            \item How to plan how many metros/trains have to be planned for given characteristics?
-            \item Telling people when they should quit thir work based on the hour and locations (work and home location).
+            \item Predict the price range for a given trip between two cities
+            \item Predict the number of passengers in a station
+        \end{itemize}
+    \item[Classification:] Classification problems linked to this data
+        \begin{itemize}
+            \item Determine if a train station should have a given service (piano, wifi...)
         \end{itemize}
 \end{description}
 
