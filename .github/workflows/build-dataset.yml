@@ -3,7 +3,7 @@ name: 'Build LaTex Document'
 on:
   push:
     tags:
-      - 'build-dataset'
+      - 'build-dataset-*'
 
 permissions:
   contents: write
@@ -30,6 +30,8 @@ jobs:
       # Commit dataset
       - name: Add dataset to commit
         run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
           git add sncf_dataset.csv
           git commit -m "[AUTO] Autobuild dataset with Github Action"
       
