@@ -1,4 +1,4 @@
-name: 'Build LaTex Document'
+name: 'Build dataset'
 
 on:
   push:
@@ -25,7 +25,9 @@ jobs:
 
       # Run tectonic to compile document
       - name: Run builder
-        run: python3 build_dataframe.py
+        run: |
+          pip install -r requirements.txt
+          python3 build_dataframe.py
       
       # Commit dataset
       - name: Add dataset to commit
