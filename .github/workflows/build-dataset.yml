@@ -2,8 +2,8 @@ name: 'Build LaTex Document'
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'build-dataset'
 
 permissions:
   contents: write
