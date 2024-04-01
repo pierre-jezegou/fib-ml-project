@@ -4,8 +4,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{xcolor}
-\usepackage[left=2cm,
-            right=2cm,
+\usepackage[left=1.5cm,
+            right=1.5cm,
             top=1cm,
             bottom=2cm]{geometry}
 % \usepackage[left=1cm, right=1cm, top=1cm, bottom=1cm]{geometry}
@@ -62,7 +62,8 @@ Final dataset characteristics are \textbf{available in the \href{https://github.
 
 We can assume the data are independent because of the data themselves. Indeed, each individual passenger is independent in their usage of the train station network. The data can be enriched as and when required by the many open data sources offered by \href{https://ressources.data.sncf.com/}{SNCF}.
 
-Consolidated data of train stations are available in the assets of the last \href{https://github.com/pierre-jezegou/fib-ml-project/releases/}{release}. The current data contains 2861 lines corresponding to stations in the French network and 31 features for the moment corresponding to stations in the French network. They are finally composed of \textbf{11970 rows $\mathbf\times$ 70 features} before pre-processing.
+Consolidated data of train stations are available in the assets of the last \href{https://github.com/pierre-jezegou/fib-ml-project/releases/}{release}. The current data contains 2861 lines corresponding to stations in the French network and 31 features for the moment corresponding to stations in the French network. They are finally composed of \textbf{11970 rows $\mathbf\times$ 70 features} before pre-processing.\\
+We will also be able to add demographic and financial data for departure and arrival cities, for more relevant features. This will require work on the data to enable cross-referencing.
 
 \subsection{Studies proposed}
 \begin{description}
