@@ -6,8 +6,8 @@
 \usepackage{xcolor}
 \usepackage[left=1.5cm,
             right=1.5cm,
-            top=1cm,
-            bottom=2cm]{geometry}
+            top=0.75cm,
+            bottom=1.75cm]{geometry}
 % \usepackage[left=1cm, right=1cm, top=1cm, bottom=1cm]{geometry}
 
 \setlength{\parindent}{0pt}
@@ -56,13 +56,13 @@ A wealth of data is available on the "SNCF" website: the company makes available
 Construction of the dataset has already begun and is available on GitHub: \url{https://github.com/pierre-jezegou/fib-ml-project}.  This construction allows us to have enough data (especially features) to obtain an analysis as close as possible to reality.
 
 \subsection{Data shape and characteristics}
-The base dataset used before consolidation is this \href{https://ressources.data.sncf.com/explore/dataset/tarifs-tgv-inoui-ouigo/information/}{link}. It has only \textit{9 columns} before adding data from other databases to consolidate it. We cross-reference this table with \href{https://ressources.data.sncf.com/explore/dataset/gares-pianos/information/}{these data}, \href{https://ressources.data.sncf.com/explore/dataset/gares-equipees-du-wifi/information/}{this one}, and \href{https://ressources.data.sncf.com/explore/dataset/frequentation-gares/information/}{these data}. We will then add some other data (computed or formatted) during preprocessing via calculation on existing features: travel distance... The dataset covers the price range \textit{(minimum price, maximum price)} for each origin-destination and tarif class in effect on 10/02/2024.\\
+The base dataset used before consolidation is this \href{https://ressources.data.sncf.com/explore/dataset/tarifs-tgv-inoui-ouigo/information/}{link}. It has only \textit{9 columns, 11968 rows} before adding data from other databases to consolidate it. We cross-reference this table with \href{https://ressources.data.sncf.com/explore/dataset/gares-pianos/information/}{these data}, \href{https://ressources.data.sncf.com/explore/dataset/gares-equipees-du-wifi/information/}{this one}, and \href{https://ressources.data.sncf.com/explore/dataset/frequentation-gares/information/}{these data}. We will then add some other data (computed or formatted) during preprocessing via calculation on existing features: travel distance... The dataset covers the price range \textit{(minimum price, maximum price)} for each origin-destination and tarif class in effect on 10/02/2024.\\
 
 Final dataset characteristics are \textbf{available in the \href{https://github.com/pierre-jezegou/fib-ml-project/blob/main/README.md}{README.md} file} of the project repository\\
 
 We can assume the data are independent because of the data themselves. Indeed, each individual passenger is independent in their usage of the train station network. The data can be enriched as and when required by the many open data sources offered by \href{https://ressources.data.sncf.com/}{SNCF}.
 
-Consolidated data of train stations are available in the assets of the last \href{https://github.com/pierre-jezegou/fib-ml-project/releases/}{release}. The current data contains 2861 lines corresponding to stations in the French network and 31 features for the moment corresponding to stations in the French network. They are finally composed of \textbf{11970 rows $\mathbf\times$ 70 features} before pre-processing.\\
+Consolidated data of train stations are available in the assets of the last \href{https://github.com/pierre-jezegou/fib-ml-project/releases/}{release}. We have data for the 2861 train stations in the French network and 31 features for the moment corresponding to stations in the French network. The final set \textit{(each train line with departure and arrival stations informations)} is finally composed of \textbf{11968 rows $\mathbf\times$ 70 features} before pre-processing.\\
 We will also be able to add demographic and financial data for departure and arrival cities, for more relevant features. This will require work on the data to enable cross-referencing.
 
 \subsection{Studies proposed}
