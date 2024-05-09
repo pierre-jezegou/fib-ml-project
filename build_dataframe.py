@@ -54,6 +54,7 @@ for column in train_stations.columns[10:21]:
 # Convert column names in english
 train_stations = train_stations.rename(columns={
     'Nom': 'city_name',
+    'Trigramme': 'trigram',
     'UIC': 'uic',
     'Segment(s) DRG': 'drg_segment',
     'Position géographique': 'geographical_position',
@@ -69,8 +70,6 @@ train_stations = train_stations.rename(columns={
     'total': 'total',
     'Service Wifi': 'wifi_service'
 })
-train_stations.to_csv("sncf_train_stations_dataset.csv", sep=";")
-
 train_stations.rename(columns={'Code commune': 'city_code'}, inplace=True)
 # COnvert city_code to string
 train_stations["city_code"] = train_stations["city_code"].astype(str)
@@ -83,4 +82,4 @@ consolidated_cities = pd.read_csv('data/generated/consolidated-cities.csv', deli
 # Merge with train stations
 result = pd.merge(train_stations, consolidated_cities, on="city_code")
 
-result.to_csv('dataset.csv', sep=';')
+result.to_csv('dataset.csv', sep=';', encoding='utf-8', index=False)

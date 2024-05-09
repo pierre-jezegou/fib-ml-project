@@ -65,6 +65,7 @@ merged_data = merged_data.rename(columns={
     'Nb de terrains de camping 2024': 'camping_sites_2024_sum',
     'Nb d\'emplacements de camping 2024': 'camping_sites_2024_sum',
     'Nb d\'autres hébergements collectifs de tourisme 2024': 'other_tourist_accommodations_2024_sum',
+    'Catégorie commune dans aire d\'attraction des villes 2020': 'city_category_in_attraction_area_2020'
 })
 print(merged_data.dtypes)
-merged_data.to_csv('data/generated/consolidated-cities.csv', sep=';')
+merged_data.to_csv('data/generated/consolidated-cities.csv', sep=';', encoding='utf-8', index=False)
