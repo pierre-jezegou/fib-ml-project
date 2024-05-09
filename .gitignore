@@ -2,3 +2,6 @@ __pycache__
 .venv
 documentation/*.pdf
 .DS_Store
+.old
+dataset.csv
+data/generated/
