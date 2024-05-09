@@ -36,6 +36,7 @@ jobs:
       - name: Run builder
         run: |
           pip install pandas
+          mkdir data/generated
           python3 consolidate_cities.py
           python3 build_dataframe.py
       
