@@ -1,5 +1,10 @@
+"""This module contains functions to calculate the distance between two points"""
 import math
 
+PARIS = {
+    'latitude': 48.866667,
+    'longitude': 2.333333
+}
 
 def gps_coordinates_to_distance(latitude1:float,
              longitude1: float,
@@ -26,29 +31,11 @@ def gps_coordinates_to_distance(latitude1:float,
     # Calculate distance in kilometers
     return (earth_radius * c)/1000
 
+def distance_to_paris(latitude:float,
+                      longitude: float
+                      ) -> float:
+    '''Compute distance between a point and Paris'''
+    return gps_coordinates_to_distance(latitude, longitude, PARIS['latitude'], PARIS['longitude'])
 
-def how_many_are_near(latitude:float,
-                      longitude: float,
-                      monuments_coordinates: list[list[float]],
-                      max_distance: float
-                      ) -> int:
-    '''Compute how many monuments are located near the target point'''
-    counter = 0
-    for monument in monuments_coordinates:
-        if len(monument)!=2:
-            continue
-        computed_distance = gps_coordinates_to_distance(latitude,
-                                                        longitude,
-                                                        monument[0],
-                                                        monument[1])
-        if computed_distance <= max_distance:
-            counter += 1
-
-    return counter
-
-
-paris = [48.866667, 2.333333]
 rouen = [49.433331, 1.08333]
-
-# print(gps_coordinates_to_distance(paris[0], paris[1], rouen[0], rouen[1]))
-# print(how_many_are_near(paris[0], paris[1], [[48, 1]], 1000))
+marseille = [43.296398, 5.370018]
