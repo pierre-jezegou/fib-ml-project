@@ -5,3 +5,4 @@ documentation/*.pdf
 .old
 dataset.csv
 data/generated/
+*.pkl.bz2
