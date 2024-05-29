@@ -25,7 +25,10 @@ def write_metrics_in_csv(y_pred: pd.Series,
         })
 
     # Add this new row to the existing csv file
-    metrics.to_csv(file_name, mode='a', header=not os.path.exists(file_name), index=False)
+    metrics.to_csv(file_name,
+                   mode='a',
+                   header=not os.path.exists(file_name),
+                   index=False)
 
 
 def compute_metrics(y_pred: pd.Series,
