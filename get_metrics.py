@@ -2,7 +2,7 @@
 import pandas as pd
 from sklearn.metrics import r2_score, mean_squared_error, median_absolute_error, mean_absolute_error
 
-def write_in_csv(y_pred: pd.Series,
+def write_metrics_in_csv(y_pred: pd.Series,
                  y_test: pd.Series,
                  model_name: str,
                  file_name: str ='metrics.csv'
