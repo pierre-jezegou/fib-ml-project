@@ -5,6 +5,7 @@ from sklearn.metrics import r2_score, mean_squared_error, median_absolute_error,
 from sklearn.inspection import permutation_importance
 from matplotlib import pyplot as plt
 import numpy as np
+from sklearn.model_selection import KFold
 
 def write_metrics_in_csv(y_pred: pd.Series,
                          y_real: pd.Series,
@@ -41,10 +42,10 @@ def compute_metrics(y_pred: pd.Series,
                     ) -> dict:
 
     """Compute metrics and save in csv file."""
-    r2 = r2_score(y_pred,y_real)
-    mse = mean_squared_error(y_pred, y_real)
-    median_abs_e = median_absolute_error(y_pred, y_real)
-    mean_abs_e = mean_absolute_error(y_pred, y_real)
+    r2 = r2_score(y_real, y_pred)
+    mse = mean_squared_error(y_real, y_pred)
+    median_abs_e = median_absolute_error(y_real, y_pred)
+    mean_abs_e = mean_absolute_error(y_real, y_pred)
 
     result = {
         'r2': r2,
@@ -56,16 +57,22 @@ def compute_metrics(y_pred: pd.Series,
     return result
 
 
-def plot_variable_importance(model, X: pd.DataFrame, y: pd.Series):
+def plot_variable_importance(model, x: pd.DataFrame, y: pd.Series, number_of_features: int = -1):
     """Plot variable importance for a given model."""
-    perm_importance = permutation_importance(model, X, y, n_repeats=30, random_state=42)
+    perm_importance = permutation_importance(model, x, y, n_repeats=30, random_state=42)
     feature_importance = perm_importance.importances_mean
     sorted_idx = np.argsort(feature_importance)
 
+    if number_of_features > len(sorted_idx) or number_of_features < 0:
+        number_of_features = len(sorted_idx)
+
     pos = np.arange(sorted_idx.shape[0]) + .5
     plt.figure(figsize=(10,10))
-    plt.barh(pos, feature_importance[sorted_idx], align='center')
-    plt.yticks(pos, X.columns[sorted_idx])
+    plt.barh(pos[-number_of_features:],
+             feature_importance[sorted_idx][-number_of_features:],
+             align='center')
+    plt.yticks(pos[-number_of_features:],
+               x.columns[sorted_idx][-number_of_features:])
     plt.xlabel('Relative Importance')
     plt.title('Variable Importance')
     plt.show()
