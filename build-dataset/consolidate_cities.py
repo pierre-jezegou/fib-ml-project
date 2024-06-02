@@ -8,11 +8,11 @@ Consolidates city statistics and attraction area data into a single dataset.
 """
 import pandas as pd
 
-raw_data_folder = '../data/'
+RAW_DATA_FOLDER = '../data/'
 
 # Load the data
-cities_statistics = pd.read_csv(raw_data_folder + 'cities_statistics.csv', delimiter=";", header=2)
-cities_attraction = pd.read_csv(raw_data_folder + 'attraction_area_per_city.csv', delimiter=";", header=0)
+cities_statistics = pd.read_csv(RAW_DATA_FOLDER + 'cities_statistics.csv', delimiter=";", header=2)
+cities_attraction = pd.read_csv(RAW_DATA_FOLDER + 'attraction_area_per_city.csv', delimiter=";", header=0)
 
 # Change column types
 cities_statistics = cities_statistics.convert_dtypes()
@@ -70,4 +70,4 @@ merged_data = merged_data.rename(columns={
     'Catégorie commune dans aire d\'attraction des villes 2020': 'city_category_in_attraction_area_2020'
 })
 print(merged_data.dtypes)
-merged_data.to_csv(raw_data_folder + 'generated/consolidated-cities.csv', sep=';', encoding='utf-8', index=False)
+merged_data.to_csv(RAW_DATA_FOLDER + 'generated/consolidated-cities.csv', sep=';', encoding='utf-8', index=False)
