@@ -5,7 +5,7 @@ from sklearn.metrics import r2_score, mean_squared_error, median_absolute_error,
 from sklearn.inspection import permutation_importance
 from matplotlib import pyplot as plt
 import numpy as np
-from sklearn.model_selection import KFold
+import seaborn as sns
 
 def write_metrics_in_csv(y_pred: pd.Series,
                          y_real: pd.Series,
@@ -76,3 +76,33 @@ def plot_variable_importance(model, x: pd.DataFrame, y: pd.Series, number_of_fea
     plt.xlabel('Relative Importance')
     plt.title('Variable Importance')
     plt.show()
+
+
+def plot_ypred_vs_yreal(y_pred: pd.Series,
+                        y_real: pd.Series,
+                        model_name: str = None,
+                        log_scale: bool = False,
+                        identity_line: bool = False
+                        ) -> None:
+    """Plot y_pred vs y_real."""
+    if log_scale:
+        y_pred = np.log(y_pred)
+        y_real = np.log(y_real)
+
+    # Add labels
+    plt.xlabel('Real values')
+    plt.ylabel('Predicted values')
+
+    # If model name is provided, add it to the title
+    if model_name:
+        plt.title(f'{model_name} - Predicted vs Real values')
+    else:
+        plt.title('Predicted vs Real values')
+
+    # Plot
+    sns.scatterplot(x=y_real, y=y_pred)
+    if identity_line:
+        plt.plot([np.min(y_real), np.max(y_real)],
+                 [np.min(y_real), np.max(y_real)],
+                 '--',
+                 color='red')
