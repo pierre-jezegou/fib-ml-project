@@ -6,6 +6,8 @@ from sklearn.inspection import permutation_importance
 from matplotlib import pyplot as plt
 import numpy as np
 import seaborn as sns
+from sklearn.model_selection import learning_curve
+import matplotlib.pyplot as plt
 
 def write_metrics_in_csv(y_pred: pd.Series,
                          y_real: pd.Series,
@@ -106,3 +108,29 @@ def plot_ypred_vs_yreal(y_pred: pd.Series,
                  [np.min(y_real), np.max(y_real)],
                  '--',
                  color='red')
+
+
+def learning_curve_plot(model,
+                        model_name: str,
+                        X: pd.DataFrame,
+                        y: pd.Series,
+                        train_sizes: int = 10
+                        ) -> None:
+    """Plot learning curve for a given model."""
+    train_sizes, train_scores, val_scores = learning_curve(model,
+                                                           X,
+                                                           y,
+                                                           cv=5,
+                                                           scoring='neg_mean_squared_error',
+                                                           train_sizes=np.linspace(0.1, 1.0, train_sizes))
+
+    train_scores_mean = -train_scores.mean(axis=1)
+    val_scores_mean = -val_scores.mean(axis=1)
+
+    plt.plot(train_sizes, train_scores_mean, label='Training error')
+    plt.plot(train_sizes, val_scores_mean, label='Validation error')
+    plt.ylabel('MSE')
+    plt.xlabel('Training size')
+    plt.title(f'{model_name} - Learning curves')
+    plt.legend()
+    plt.show()
