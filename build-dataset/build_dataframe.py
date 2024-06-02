@@ -83,4 +83,4 @@ consolidated_cities = pd.read_csv(RAW_DATA_FOLDER + 'generated/consolidated-citi
 # Merge with train stations
 result = pd.merge(train_stations, consolidated_cities, on="city_code")
 
-result.to_csv('dataset.csv', sep=';', encoding='utf-8', index=False)
+result.to_csv('../dataset.csv', sep=';', encoding='utf-8', index=False)
