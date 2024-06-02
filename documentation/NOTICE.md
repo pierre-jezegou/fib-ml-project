@@ -15,7 +15,7 @@
 3. Preprocess the dataset
     - Run each cell of the `Preprocessing.ipynb` notebook to preprocess the dataset
 
-4. Train and evaluate the models
+4. Train and evaluate the models. All the models notebooks are located in the `models` folder of the repo
     - Run each cell of the `linear-models.ipynb` notebook to train and evaluate the linear models
     - Run each cell of the `knn.ipynb` notebook to train and evaluate the KNN model
     - Run each cell of the `randomforest.ipynb` notebook to train and evaluate the Random Forest model
