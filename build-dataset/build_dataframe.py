@@ -1,6 +1,7 @@
 '''Build dataset'''
 import pandas as pd
 
+raw_data_folder = '../data/'
 
 def transform_uid(uic: int | float | str) -> str:
     '''Format UIC'''
@@ -8,24 +9,24 @@ def transform_uid(uic: int | float | str) -> str:
 
 ### TRANSFORMATIONS - PREPARE INDIVIDUAL DATASETS ###
 # Transform frequentation in train stations
-frequentation = pd.read_csv('data/frequentation-gares-raw.csv', delimiter=";", header=0)
+frequentation = pd.read_csv(raw_data_folder + 'frequentation-gares-raw.csv', delimiter=";", header=0)
 frequentation["UIC"] = frequentation["UIC"].astype(str).str.zfill(10)
 frequentation = frequentation.rename(columns={'Nom de la gare': 'Gare'})
 
-frequentation.to_csv('data/generated/frequentation-gares.csv', index=False, sep=";")
+frequentation.to_csv(raw_data_folder + 'generated/frequentation-gares.csv', index=False, sep=";")
 
 
 # Transform wifi presence in train stations
-wifi = pd.read_csv('data/gares-equipees-du-wifi-raw.csv', delimiter=";", header=0)
+wifi = pd.read_csv(raw_data_folder + 'gares-equipees-du-wifi-raw.csv', delimiter=";", header=0)
 wifi["UIC"] = wifi["UIC"].apply(lambda uid: ("87"+str(uid).split(".", maxsplit=1)[0]).zfill(10))
-wifi.to_csv('data/generated/gares-equipees-du-wifi.csv', index=False, sep=";")
+wifi.to_csv(raw_data_folder + 'generated/gares-equipees-du-wifi.csv', index=False, sep=";")
 
 
 ### TRANSFORMATIONS - MERGE DATASETS ###
-FILENAMES = ["data/gares-de-voyageurs.csv",
-             "data/generated/frequentation-gares.csv",
-             "data/gares-pianos.csv",
-             "data/generated/gares-equipees-du-wifi.csv",
+FILENAMES = [raw_data_folder + "gares-de-voyageurs.csv",
+             raw_data_folder + "generated/frequentation-gares.csv",
+             raw_data_folder + "gares-pianos.csv",
+             raw_data_folder + "generated/gares-equipees-du-wifi.csv",
              ]
 
 def merge_data_train_stations(filenames: list[str]) -> pd.DataFrame:
@@ -77,7 +78,7 @@ train_stations["city_code"] = train_stations["city_code"].astype(str)
 
 ### INTEGRATION - CONSOLIDATED CITIES ##
 # Add consolidated cities information
-consolidated_cities = pd.read_csv('data/generated/consolidated-cities.csv', delimiter=";", header=0)
+consolidated_cities = pd.read_csv(raw_data_folder + 'generated/consolidated-cities.csv', delimiter=";", header=0)
 
 # Merge with train stations
 result = pd.merge(train_stations, consolidated_cities, on="city_code")
