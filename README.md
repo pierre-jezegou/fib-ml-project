@@ -14,6 +14,44 @@ Overall, this project focuses on using advanced computer techniques to optimize 
 - `project_proposal`: first deliverable
 - `main`: final report
 
+## Project organization
+```plain
+.
+├── README.md
+├── requirements.txt
+│
+├── documentation
+│   ├── BUILD_DATASET.md
+│   ├── NOTICE.md
+│   ├── TODO.md
+│   └── project_proposal.tex
+│
+├── data
+│   ├── attraction_area_per_city.csv
+│   ├── cities_statistics.csv
+│   ├── frequentation-gares-raw.csv
+│   ├── gares-de-voyageurs.csv
+│   ├── gares-equipees-du-wifi-raw.csv
+│   └── gares-pianos.csv
+├── build-dataset
+│   ├── build_dataframe.py
+│   └── consolidate_cities.py
+│
+├── Preprocessing.ipynb
+├── distance_calculation.py
+├── dataRead_processed.pkl.bz2
+├── dataset_preprocessed.csv
+│
+└── models
+   ├── helpers.py
+   ├── knn.ipynb
+   ├── linear-models.ipynb
+   ├── metrics.csv
+   ├── randomforest.ipynb
+   ├── sampling.ipynb
+   └── svm.ipynb 
+```
+
 ## Usage
 - Install working environment
     - Install virtual environment (`venv`): `python3 -m venv .venv && source .venv/bin/activate`
