@@ -1,0 +1,21 @@
+\chapter{Model comparison}
+\section{Metrics used to compare the models}
+Mean Squared Error (MSE) measures the average of the squares of the errors or deviations, indicating the model's risk corresponding to the expected value of the squared error loss. Mean Absolute Error (MAE) represents the average absolute difference between predicted and actual values, providing a clear indication of the average error magnitude. Median Absolute Error (MedianAE) provides the median of all absolute differences between predicted and actual values, being less sensitive to outliers compared to MAE. The R² Score indicates how well the model's predictions match the actual data, with a higher R² score signifying better model performance. For classification tasks, Accuracy measures the proportion of true results (both true positives and true negatives) among the total number of cases examined. The Confusion Matrix helps in understanding the performance of a classification model by showing the actual versus predicted classifications.
+
+\section{Comparison}
+We implemented and evaluated several models, including Linear Regression, Ridge Regression, Lasso Regression, K-Nearest Neighbors (KNN), Random Forest, Gradient Boosting, and Support Vector Regression (SVR). Below is a summary of the results and insights for each model based on the aforementioned metrics.
+{\small
+\begin{itemize}
+    \item For linear models, Linear Regression achieved an MSE of 4.232e+10, an MAE of 54041, and an R² score of 0.968842. Ridge Regression had an MSE of 4.242e+10, an MAE of 51118, and an R² score of 0.968726. Lasso Regression resulted in an MSE of 4.366e+10, an MAE of 52531, and an R² score of 0.967857.
+    \item For the K-Nearest Neighbors (KNN) model, the simple KNN model had an MSE of 2.718e+11, an MAE of 140778, and an R² score of 0.834915. The tuned KNN model improved to an MSE of 2.176e+11, an MAE of 132651, and an R² score of 0.867865.
+    \item The Random Forest model for regression had an MSE of 1.069261e+10, an MAE of 62390.014597, and an R² score of 0.952629. For classification, it achieved an accuracy of 0.9618834.
+    \item Gradient Boosting for regression achieved the best performance with an MSE of 2.286346e+09 and an R² score of 0.968842. For classification, it matched the Random Forest model with an accuracy of 0.9618834.
+    \item Support Vector Regression (SVR) with the LinearSVR model resulted in an MSE of 7.801625e+10, an MAE of 62390.014597, and an R² score of 0.952629.
+\end{itemize}
+}
+
+
+\section{Best model for our problem}
+Considering both the regression and classification tasks, the Gradient Boosting Regression model is the best choice for predicting the total number of passengers, given its lowest MSE (2.286346e+09) and high R² score. For example, Gradient Boosting Regression outperformed Random Forest Regression (MSE: 1.069261e+10) and Linear Regression (MSE: 4.232e+10), showing its superiority in capturing complex patterns in the data.
+
+For classification tasks, such as predicting whether a train station provides WiFi service, the Random Forest Classification model is the most effective due to its higher accuracy (0.9618834). The confusion matrix for Random Forest Classification showed a high number of correctly classified instances, and the ROC curve indicated strong performance across different threshold settings.

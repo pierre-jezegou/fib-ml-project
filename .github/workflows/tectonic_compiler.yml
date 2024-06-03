@@ -40,6 +40,7 @@ jobs:
       - name: Compile TeX file
         run: |
           tectonic documentation/project_proposal.tex
+          tectonic documentation/report/main.tex
       
       - name: Upload artifact
         uses: actions/upload-artifact@v3

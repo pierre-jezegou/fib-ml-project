@@ -1,0 +1,96 @@
+\documentclass[10pt,a4paper,hidelinks]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage[left=3cm,
+            right=3cm,
+            top=2cm,
+            bottom=2cm]{geometry}
+            
+\usepackage{hyperref}
+%%%%%%%%%%%%%%% Colors %%%%%%%%%%%%%%%
+\usepackage{xcolor}
+\usepackage{sectsty}
+\definecolor{fib_red}{RGB}{191,21,64}
+\definecolor{fib_gray}{RGB}{111,111,111}
+\definecolor{blue_upc}{RGB}{52,120,186}
+\definecolor{dark_green}{rgb}{0.0, 0.4, 0.0}
+\subsectionfont{\color{fib_red}}
+\subsubsectionfont{\color{fib_gray}}
+\renewcommand\fbox{\fcolorbox{black}{fib_red!20}}
+
+\usepackage{booktabs}
+\usepackage{verbatim}
+\newcommand{\colorverb}[2]{\textcolor{#1}{\texttt{\detokenize{#2}}}}
+\newcommand{\type}[1]{\colorverb{dark_green}{#1}}
+\newcommand{\code}[1]{\colorverb{dark_green}{#1}}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{listings}
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{gray!10},
+  stringstyle=\color{green!50!black},
+  keywordstyle=\color{fib_red},
+  numberstyle=\tiny\color{fib_gray},
+  commentstyle=\color{blue_upc},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\usepackage{fancyhdr}
+\fancyfoot[R]{\raisebox{-0.5\baselineskip}{\includegraphics[scale=0.25]{assets/images/upc_logo.jpeg}}}
+\fancyhead[L]{}
+\usepackage[Bjornstrup]{fncychap}
+
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\@makechapterhead}{50\p@}{0\p@}{}{}
+\patchcmd{\@makeschapterhead}{50\p@}{0\p@}{}{}
+\makeatother
+
+\usepackage{background}
+
+\newcommand{\documentStatus}{SUBMITTED}
+
+\newcommand{\subtitle}[1]{
+    \posttitle{
+    \par\end{center}
+    \begin{center}\Large\bfseries#1\end{center}
+    }
+}
+
+\setcounter{tocdepth}{1}
+
+
+\begin{document}
+\input{chapters/00-cover-page}
+\tableofcontents
+\input{chapters/01-introduction}
+\input{chapters/02-build-dataset}
+\input{chapters/03-preprocessing}
+\chapter{Models implementation}
+\input{chapters/04-linear-ridge-regression}
+\input{chapters/05-KNN}
+\input{chapters/06-random-forest}
+\input{chapters/07-SVM}
+\input{chapters/08-model-comparaison}
+\input{chapters/09-conclusion}
+\end{document}

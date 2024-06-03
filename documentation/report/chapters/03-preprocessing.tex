@@ -1,0 +1,117 @@
+\chapter{Preprocessing}
+
+\section{Deal with missing values}
+\subsection{Too many missing values}
+Lets have a look on some precise columns where we suppose that there is not enough data. We can use pandas functions.
+\begin{lstlisting}[language=python]
+>>> dataset.piano.value_counts(dropna=False)
+piano
+NaN    2179
+1.0      48
+0.0      28
+2.0       1
+Name: count, dtype: int64
+\end{lstlisting}
+And this is the same problem with the majority of the services provided in the train stations, such as \code{power_station}, \code{baby_foot}, \code{distr_histoires_courtes}, \code{total}. This can be analysed as followed: no surveys were organized in those small train station. We could consequently fill all the cells with \code{0} value. But this can bias the final result. We finally decided to drop all these columns because we decided that it was directly correlated with how many people are using this station (sort of return on investment made by SNCF).
+
+\subsection{Some missing values}
+Then, we can focus, with almost the same method to other columns.
+\begin{lstlisting}[language=python]
+>>> (dataRead.total_passengers_2022	==0).value_counts()
+total_passengers_2022
+False    2246
+True       10
+Name: count, dtype: int64
+\end{lstlisting}
+We can see that there are 10 rows containing always 0 value for all the fields. This happen when a city is mentionned 2 times for 2 different trains (for example high speed trains and high speed trains from airport). We chose to remove those lines because passengers has already been counted once.
+\begin{lstlisting}[language=python]
+dataRead=  dataRead[(dataRead.total_passengers_2022!=0)
+            & (dataRead.total_passengers_and_non_passengers_2022!=0) 
+            & (dataRead.total_passengers_2015!=0)
+            & (dataRead.total_passengers_and_non_passengers_2015!=0)
+            ]
+dataRead.shape
+\end{lstlisting}
+Then, we identified that the \code{wifi_service} column contains the values \textit{'Non'} (No), \textit{'Oui'} (Yes), and some missing values (NaN). The distribution of these values was as follows:
+\begin{lstlisting}[language=python]
+>>> dataset.wifi_service.value_counts(dropna=False)
+wifi_service
+Non    2106
+Oui     120
+NaN      8
+Name: count, dtype: int64
+\end{lstlisting}
+To handle the missing values and convert the categorical values to binary, we: We removed rows with \code{NaN} values in the \code{wifi_service column} and converted \code{"Oui"} to 1 and \code{"Non"} to 0. We encountered duplicates for the same train station, missing values for WiFi, and other missing numerical values.
+
+\section{Outliers}
+As we have a look at the outliers, we notice there are a significant amount in the following columns: (\code{total_passengers_2022}), (\code{total_passengers_and_non_passangers_2022}), (\code{total_passengers_2015}), and (\code{total_passengers_and_non_passangers_2015}). We have decided to keep these as they are directly relevant to the prediction on how many people a train station is likely to generate. 
+
+There were some outliers for other columns as well, but not a significant amount. Therefore we decided to keep them as well.
+
+
+\section{Feature extraction}
+We did a lot of feature engineering and researches to find the most relevant features to add to our dataset.
+\begin{itemize}
+    \item Evolution rate between 7 years: we found interesting to compute the evolution rate in term of passengers in the train station between two different years in the past. Indeed, some improvements (such as new train lines, infrastructure changes, construction work...) have been done in train stations leading to an increase of passengers in the train stations. As a consequence, it is directly linked to our topic.
+    \item Split geographical coordinates into latitude and longitude. To allow a better comprehension of the dataset and be able to plot geographical dependant figures.
+    \item Distance to Paris (country city center). As explained in \ref{paris:center-france}, we chose to compute the distance to the main city.
+    \item From numerical value to categories: to be able to use categorical data in models which are just accepting numerical values, we mostly chose to use \href{https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html#sklearn.preprocessing.OneHotEncoder}{One hot encoder}. It means creating as much binary columns as there are categories in a given column.
+\end{itemize}
+
+
+\section{Gaussianity, transformations and normalization}
+To prepare the data for machine learning models, it is important to ensure the features are on a similar scale and follow a Gaussian distribution where possible. We applied the following transformations:
+\begin{itemize}
+    \item \textbf{Normalization:} Numerical columns were normalized using the StandardScaler from sklearn.
+    \item \textbf{Log Transformation:} For skewed data, we applied log transformation to approximate Gaussianity.
+\end{itemize}
+\begin{lstlisting}[language=python]
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+numerical_cols = ['total_passengers_2022', 'total_passengers_and_non_passengers_2022', 'total_passengers_2015', 'total_passengers_and_non_passengers_2015']
+dataset[numerical_cols] = scaler.fit_transform(dataset[numerical_cols])
+\end{lstlisting}
+
+
+\section{Feature selection}
+\subsection{Correlation between variables}
+We removed over-correlated variables to reduce redundancy and avoid multicollinearity in our model.
+
+\subsection{Non relevant features}
+We removed features that did not add significant value to the model.
+
+\section{Helper functions}
+To simplify the workflow, we developed different auxiliary functions:
+\begin{itemize}
+    \item Distance to Paris: we used the \textit{as the crow flies} distance. You can find the implementation in the \href{https://github.com/pierre-jezegou/fib-ml-project/blob/main/distance_calculation.py}{\code{distance_calculation.py}}.
+    \item Export metrics to compare models: we wanted to retrieve all the metrics in one single file to be able to compare as easily as possible the models (\code{write_metrics_in_csv})
+    \item Plot the variable importance: as we use for each model the variable importance, we decided to implement it one time and use in all our notebooks: \code{plot_variable_importance}
+    \item Other functions were implemented to make our lives easier: \code{plot_ypred_vs_yreal} (to compare predictions with real values, with log axis or not...), \code{learning_curve_plot}...
+\end{itemize}
+
+
+\section{Resampling protocols}
+As presented in the dataset inspection, our dataset is not very well balanced regarding the target value (passengers). Indeed, there are not a lot of train stations with a lot of passengers: some of the main train stations just aggregate most of the traffic (in term of quantity of passengers). As a consequence, we have very few data for high traffic stations and the models will be influenced maily by the little train stations (whereas the main ones have to be very influent).
+
+\subsection{Potential issues}
+This means that when we want to scale up (i.e. generalize the model), we may run into major difficulties. Indeed, new data concerning large stations can have a fairly significant impact on model data. Even if methods exist to overcome these problems, we need to be vigilant.
+
+\subsection{Oversampling or undersampling}
+First, we could not do undersampling to remove some of the little stations. Indeed, we don't have so much data to accept removing 1/3 of our data (for example). Then, it is impossible to collect more data (there is no additional data available). So the solution could be to use oversampling methods.
+\subsection{SMOTE}
+We chose to use SMOTE algorithm for our regression problem to create more points regarding low-traffic train stations as if we wanted to deal with class imbalance in a classification problem. The problem was there were too few points (and the points were too spread out to be able to use this method.
+\begin{lstlisting}[language=Python]
+# SMOTE
+smote = SMOTE(random_state=42)
+X_resampled, y_resampled = smote.fit_resample(X, y)
+\end{lstlisting}
+\begin{lstlisting}
+ValueError: Expected n_neighbors <= n_samples_fit, but n_neighbors = 6, n_samples_fit = 1, n_samples = 1
+\end{lstlisting}
+
+\subsection{Synthesize data}
+As SMOTE was impossible to use due to lack of data points in high-traffic stations, we tried to generate new data points copying points. We also chose to add some noise to add more realism to the new generated points. In the end, it didn't prove very useful in terms of performance. These steps will therefore not be retained in the main preprocessing script (but in this file)\\
+
+You can find all what we implemented for these parts in the following notebook:\\
+\href{https://github.com/pierre-jezegou/fib-ml-project/blob/main/models/sampling.ipynb}{\code{models/sampling.ipynb}}
+
