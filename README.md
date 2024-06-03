@@ -51,6 +51,14 @@ Overall, this project focuses on using advanced computer techniques to optimize 
    ├── sampling.ipynb
    └── svm.ipynb 
 ```
+- `documentation`: contains all the documentation files
+    - `BUILD_DATASET.md`: explains how to build the dataset manually (without the CI)
+    - `NOTICE.md`: contains the notice for the project, to reproduce the results
+- Build dataset
+    - `data`: contains all the data files
+    - `build-dataset`: contains the scripts to build the dataset
+- Preprocessing notebook and algorithms are located at the root of the project
+- `models`: contains the notebooks for the models
 
 ## Usage
 - Install working environment
