@@ -10,7 +10,7 @@
     ```
 2. Get the non-preprocessed dataset
     - If you want to use the dataset that we built, you can download it from [here](https://github.com/pierre-jezegou/fib-ml-project/releases/tag/build-dataset-1.0.3)
-    - If you want to build the dataset yourself, you can follow the instructions in the [BUILD_DATASET.md](https://github.com/pierre-jezegou/fib-ml-project/blob/main/BUILD_DATASET.md)
+    - If you want to build the dataset yourself, you can follow the instructions in the [BUILD_DATASET.md](https://github.com/pierre-jezegou/fib-ml-project/blob/main/documentation/BUILD_DATASET.md)
 
 3. Preprocess the dataset
     - Run each cell of the `Preprocessing.ipynb` notebook to preprocess the dataset
