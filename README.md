@@ -1,4 +1,4 @@
-# Project
+# Project - Machine Learning Analysis of Train stations
 - Pierre Jézégou
 - Julie Oppedal
 
