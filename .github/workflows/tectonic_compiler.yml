@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: PDF file
-          path: "documentation/*.pdf"
+          path: "documentation/**/*.pdf"
           if-no-files-found: error
           retention-days: 5
 
@@ -56,7 +56,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "documentation/*.pdf"
+          file: "documentation/**/*.pdf"
           asset_name: "Compiled documentation"
           tag: ${{ github.ref }}
           overwrite: true
